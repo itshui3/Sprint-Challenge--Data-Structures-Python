@@ -12,14 +12,14 @@ names_2 = f.read().split("\n")  # List containing 10000 names
 f.close()
 
 duplicates = []  # Return the list of duplicates in this data structure
-
+# Originally, time complexity is O(n^2)
 # Replace the nested for loops below with your improvements
 # for name_1 in names_1: # Iterate through 1st list of names
 #     for name_2 in names_2: # Within each iteration^ iterate through 2nd list of names
 #         if name_1 == name_2: # Compare and append the names into a duplicates array
 #             duplicates.append(name_1)
-names_2 = sorted(names_2)
-for name_1 in names_1: # Iterate through 1st list of names
+names_2 = sorted(names_2) # O(n log n)
+for name_1 in names_1: # O(n log n)
     names = names_2
     start = 0
     end = len(names_2)-1
