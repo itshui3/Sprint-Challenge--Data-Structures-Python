@@ -21,38 +21,34 @@ duplicates = []  # Return the list of duplicates in this data structure
 #             duplicates.append(name_1)
 
 #First pass, I achieve O(n log n) + O(n log n) = same thing
-# names_2 = sorted(names_2) # O(n log n)
-# for name_1 in names_1: # O(n log n)
-#     names = names_2
-#     start = 0
-#     end = len(names_2)-1
-#     while len(names):
-#         start = 0
-#         end = len(names)-1
-#         mid = (end - start)//2
-#         if names[mid] == name_1:
-#             duplicates.append(name_1)
-#             break
-#         elif name_1 > names[mid]:
-#             start = mid + 1
-#             names = names[mid + 1:]
-#             continue
-#         elif name_1 < names[mid]:
-#             end = mid - 1
-#             names = names[:mid]
-#             continue
-#         else:
-#             break
+names_2 = sorted(names_2) # O(n log n)
+for name_1 in names_1: # O(n log n)
+    names = names_2
+    while len(names):
+        start = 0
+        end = len(names)-1
+        mid = (end - start)//2
+        if names[mid] == name_1:
+            duplicates.append(name_1)
+            break
+        elif name_1 > names[mid]:
+            start = mid + 1
+            names = names[start:]
+        elif name_1 < names[mid]:
+            end = mid
+            names = names[:end]
+        else:
+            break
 
 # Second Pass
-bst = BinarySearchTree(names_2[0])
-for i in range(len(names_2)):
-    if i != 0:
-        bst.insert(names_2[i])
+# bst = BinarySearchTree(names_2[0])
+# for i in range(len(names_2)):
+#     if i != 0:
+#         bst.insert(names_2[i])
 
-for i in names_1:
-    if bst.contains(i):
-        duplicates.append(i)
+# for i in names_1:
+#     if bst.contains(i):
+#         duplicates.append(i)
 
 
 end_time = time.time()
