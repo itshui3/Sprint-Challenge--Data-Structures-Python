@@ -1,4 +1,5 @@
 import time
+from bst import BinarySearchTree
 
 start_time = time.time()
 
@@ -18,30 +19,45 @@ duplicates = []  # Return the list of duplicates in this data structure
 #     for name_2 in names_2: # Within each iteration^ iterate through 2nd list of names
 #         if name_1 == name_2: # Compare and append the names into a duplicates array
 #             duplicates.append(name_1)
-names_2 = sorted(names_2) # O(n log n)
-for name_1 in names_1: # O(n log n)
-    names = names_2
-    start = 0
-    end = len(names_2)-1
-    while len(names):
-        start = 0
-        end = len(names)-1
-        mid = (end - start)//2
-        if names[mid] == name_1:
-            duplicates.append(name_1)
-            break
-        elif name_1 > names[mid]:
-            start = mid + 1
-            names = names[mid + 1:]
-            continue
-        elif name_1 < names[mid]:
-            end = mid - 1
-            names = names[:mid]
-            continue
-        else:
-            break
+
+#First pass, I achieve O(n log n) + O(n log n) = same thing
+# names_2 = sorted(names_2) # O(n log n)
+# for name_1 in names_1: # O(n log n)
+#     names = names_2
+#     start = 0
+#     end = len(names_2)-1
+#     while len(names):
+#         start = 0
+#         end = len(names)-1
+#         mid = (end - start)//2
+#         if names[mid] == name_1:
+#             duplicates.append(name_1)
+#             break
+#         elif name_1 > names[mid]:
+#             start = mid + 1
+#             names = names[mid + 1:]
+#             continue
+#         elif name_1 < names[mid]:
+#             end = mid - 1
+#             names = names[:mid]
+#             continue
+#         else:
+#             break
+
+# Second Pass
+bst = BinarySearchTree(names_2[0])
+for i in range(len(names_2)):
+    if i != 0:
+        bst.insert(names_2[i])
+
+for i in names_1:
+    if bst.contains(i):
+        duplicates.append(i)
+
 
 end_time = time.time()
+
+
 print (f"{len(duplicates)} duplicates:\n\n{', '.join(duplicates)}\n\n")
 print (f"runtime: {end_time - start_time} seconds")
 

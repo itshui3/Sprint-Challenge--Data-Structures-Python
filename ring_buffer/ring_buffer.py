@@ -32,12 +32,6 @@ class RingBuffer:
 
         return list_buffer_contents
 
-buffer = RingBuffer(5)
-buffer.append('a')
-buffer.append('b')
-buffer.append('c')
-buffer.append('d')
-
 # ----------------Stretch Goal-------------------
 
 
