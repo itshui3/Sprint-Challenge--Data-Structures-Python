@@ -1,24 +1,59 @@
 import time
+from bst import BinarySearchTree
 
 start_time = time.time()
 
-f = open('names_1.txt', 'r')
+f = open('./names/names_1.txt', 'r')
 names_1 = f.read().split("\n")  # List containing 10000 names
+# Split up by line into columns
 f.close()
-
-f = open('names_2.txt', 'r')
+# print(names_1, 'names 1')
+f = open('./names/names_2.txt', 'r')
 names_2 = f.read().split("\n")  # List containing 10000 names
 f.close()
 
 duplicates = []  # Return the list of duplicates in this data structure
-
+# Originally, time complexity is O(n^2)
 # Replace the nested for loops below with your improvements
-for name_1 in names_1:
-    for name_2 in names_2:
-        if name_1 == name_2:
+# for name_1 in names_1: # Iterate through 1st list of names
+#     for name_2 in names_2: # Within each iteration^ iterate through 2nd list of names
+#         if name_1 == name_2: # Compare and append the names into a duplicates array
+#             duplicates.append(name_1)
+
+#First pass, I achieve O(n log n) + O(n log n) = same thing
+names_2 = sorted(names_2) # O(n log n)
+for name_1 in names_1: # O(n log n)
+    names = names_2
+    while len(names):
+        start = 0
+        end = len(names)-1
+        mid = (end - start)//2
+        if names[mid] == name_1:
             duplicates.append(name_1)
+            break
+        elif name_1 > names[mid]:
+            start = mid + 1
+            names = names[start:]
+        elif name_1 < names[mid]:
+            end = mid
+            names = names[:end]
+        else:
+            break
+
+# Second Pass
+# bst = BinarySearchTree(names_2[0])
+# for i in range(len(names_2)):
+#     if i != 0:
+#         bst.insert(names_2[i])
+
+# for i in names_1:
+#     if bst.contains(i):
+#         duplicates.append(i)
+
 
 end_time = time.time()
+
+
 print (f"{len(duplicates)} duplicates:\n\n{', '.join(duplicates)}\n\n")
 print (f"runtime: {end_time - start_time} seconds")
 
