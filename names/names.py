@@ -15,81 +15,65 @@ duplicates = []  # Return the list of duplicates in this data structure
 
 # Replace the nested for loops below with your improvements
 names = []
-# for name_1 in names_1:
-#     names.append(name_1)
 
-# names_1.sort()
+names_1.sort()
 
-# def re_check_dupes(val, search_arr):
+def re_binary_search(arr, target):
+    # search an array for a value in O(log n)
+    # return True if it is found in given array
+    # return False if it is not found
 
-#     center = len(search_arr) - 1 // 2
-#     if val == search_arr[center]: return True
+# R_i
+    if len(arr) < 2:
+        if target == arr[0]: return True
+        else: return False
+# R_ie_1
+    elif len(arr) % 2 == 0:
+        # even
+        middex_right = len(arr) // 2
+        middex_left = middex_right - 1
 
-#     left = search_arr[:center]
-#     right = search_arr[center + 1:]
+        if target == arr[middex_right] or target == arr[middex_left]: return True
+        elif target > arr[middex_left] and target < arr[middex_right]: return False
 
-#     if val > center:
-#         return re_check_dupes(val, right)
+        elif target < arr[middex_left]:
+            # recurse with left_arr, inclusive middex_left
+            left_arr = arr[:middex_left+1]
+            return re_binary_search(left_arr, target)
 
-#     elif val < center:
-#         return re_check_dupes(val, left)
+        elif target > arr[middex_right]:
+            # recurse with right_arr, inclusive middex_right
+            right_arr = arr[middex_right:]
+            return re_binary_search(right_arr, target)
 
-#     return False
-
-# for i in names_2:
-#     if re_check_dupes(i, names_1):
-#         names.append(i)
-
-class BST:
-    def __init__(self, value):
-        self.value = value
-        self.left = None
-        self.right = None
-
-    def insert(self, value):
-
-        if value < self.value:
-
-            if self.left is None:
-                self.left = BST(value)
-                return
-            else:
-                self.left.insert(value)
-        else:
-            if self.right is None:
-                self.right = BST(value)
-                return
-            else:
-                self.right.insert(value)
-
-    def contains(self, value):
-
-        if self.value == value: return True
-
-        elif value < self.value:
-
-            if self.left is None: return False
-
-            else:
-                return self.left.contains(value)
-
-        else:
-
-            if self.right is None: return False
-
-            else:
-                return self.right.contains(value)
-
-bst = BST(names_1[0])
-if bst.value > names_1[1]:
-    print('true')
-
-for i in range(1, len(names_1)):
-    bst.insert(names_1[i])
+# R_e
+    else:
+        # odd
+        middex = len(arr) // 2
+        
+        if target == arr[middex]: return True
+        elif target < arr[middex]:
+            # recurse with left_arr
+            left = arr[:middex]
+            return re_binary_search(left, target)
+        elif target > arr[middex]:
+            # recurse with right_arr
+            right = arr[middex+1:]
+            return re_binary_search(right, target)
 
 for i in names_2:
-    if bst.contains(i):
+    if re_binary_search(names_1, i):
         duplicates.append(i)
+    # in binary search with an array, there are two cases to watch out for
+    # 1st is if the leftover array is an odd number of elements
+    # in this case, the middle is a single element
+
+    # 2nd case is if there are an even number of elements
+    # in this case, 
+    # the floor division of length of arr // 2
+    # the mid is the first element on the right side 
+
+
 
 end_time = time.time()
 print (f"{len(duplicates)} duplicates:\n\n{', '.join(duplicates)}\n\n")
